@@ -1,0 +1,40 @@
+# If you prefer the allow list template instead of the deny list, see community template:
+# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
+#
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.dylib
+*.o
+*.a
+*.so
+*.prof
+
+# Test binary, built with `go test -c`
+*.test
+
+# Download cache file
+*.cache
+
+# IDE specific metadata
+.idea/
+#.vscode/
+
+# Apple fodder
+.DS_Store
+
+# Test and Lint output files
+*.out
+*.gcov
+*.lcov
+*.log
+
+# Temp files directory
+tmp/
+
+# exclude go lang build destination directory
+dist/
+
+# exclude go lang vendor folder added in go 1.18
+vendor/

@@ -1,5 +1,9 @@
 package ext
 
+import (
+	"strings"
+)
+
 // Reverse will reverse a string.
 func Reverse(str string) string {
 	// convert string to go single characters (runes)
@@ -25,4 +29,20 @@ func Ellipse(str string, max int, ellipses string) string {
 	}
 
 	return str
+}
+
+func StringArrayContains(array []string, value string, caseInsensitive bool) bool {
+	for _, item := range array {
+		if caseInsensitive {
+			if strings.EqualFold(item, value) {
+				return true
+			}
+		} else {
+			if item == value {
+				return true
+			}
+		}
+	}
+
+	return false
 }

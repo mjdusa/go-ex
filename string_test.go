@@ -121,3 +121,63 @@ func Test_Ellipse(t *testing.T) {
 		assert.Equal(t, test.Expected.Value, actual, test.Name)
 	}
 }
+
+func Test_StringArrayContains(t *testing.T) {
+	assert := assert.New(t)
+
+	testCases := []struct {
+		StringArray     []string
+		Value           string
+		CaseInsensitive bool
+		Expected        bool
+		Description     string
+	}{
+		{
+			StringArray:     []string{},
+			Value:           "",
+			CaseInsensitive: false,
+			Expected:        false,
+			Description:     "Empty[] and empty Vaslue should return false",
+		},
+		{
+			StringArray:     []string{},
+			Value:           "Foo",
+			CaseInsensitive: false,
+			Expected:        false,
+			Description:     "Empty[] with Value should return false",
+		},
+		{
+			StringArray:     []string{"Foo"},
+			Value:           "Foo",
+			CaseInsensitive: false,
+			Expected:        true,
+			Description:     "Foo == Foo should return true",
+		},
+		{
+			StringArray:     []string{"foo"},
+			Value:           "Foo",
+			CaseInsensitive: false,
+			Expected:        false,
+			Description:     "foo != Foo should return false",
+		},
+		{
+			StringArray:     []string{"foo"},
+			Value:           "Foo",
+			CaseInsensitive: true,
+			Expected:        true,
+			Description:     "foo == Foo should return true",
+		},
+		{
+			StringArray:     []string{"fee", "fi", "foe", "fum"},
+			Value:           "Fi",
+			CaseInsensitive: true,
+			Expected:        true,
+			Description:     "fi == Fi should return true",
+		},
+	}
+
+	for _, tc := range testCases {
+		actual := StringArrayContains(tc.StringArray, tc.Value, tc.CaseInsensitive)
+		assert.Equal(tc.Expected, actual, tc.Description)
+	}
+}
