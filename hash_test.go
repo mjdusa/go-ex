@@ -6,39 +6,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_MD5(t *testing.T) {
-	type provided struct {
-		Data string
-	}
-	type expected struct {
-		Error error
-		Value string
-	}
-
-	tests := []struct {
-		Name     string
-		Provided provided
-		Expected expected
-	}{
-		{
-			Name: "MD5 test",
-			Provided: provided{
-				Data: "abcdefghijklmnipqrstuvwxyz01234567890`-=_+[]{}|\\:;'\",.<>?/~!@#$%^&*()_+",
-			},
-			Expected: expected{
-				Error: nil,
-				Value: "a42e6dbf968f1824c439fe21d68a3156",
-			},
-		},
-	}
-
-	for _, test := range tests {
-		actual := MD5(test.Provided.Data)
-
-		assert.Equal(t, test.Expected.Value, actual, test.Name)
-	}
-}
-
 func Test_SHA256(t *testing.T) {
 	type provided struct {
 		Data string

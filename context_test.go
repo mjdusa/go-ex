@@ -435,7 +435,7 @@ func Test_GetFieldsMap_Error(t *testing.T) {
 				Fields:     nil,
 			},
 			Expected: expected{
-				Error: ErrContextValuesNotFound,
+				Error: WrapError("GetFieldsMap->GetContextValues", ErrContextValuesNotFound),
 				Value: nil,
 			},
 		},
@@ -446,7 +446,7 @@ func Test_GetFieldsMap_Error(t *testing.T) {
 
 		actualValue, actualErr := GetFieldsMap(ctx, test.Provided.ValuesKey, test.Provided.Fields...)
 
-		assert.Equal(t, test.Expected.Error, actualErr, test.Name)
+		assert.Equal(t, test.Expected.Error.Error(), actualErr.Error(), test.Name)
 		assert.Nil(t, actualValue, test.Name)
 	}
 }

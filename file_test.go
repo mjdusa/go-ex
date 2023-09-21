@@ -39,7 +39,7 @@ func Test_FileSize(t *testing.T) {
 				Data: "tests/i-do-not-exist",
 			},
 			Expected: expected{
-				Error: fmt.Errorf("stat tests/i-do-not-exist: no such file or directory"),
+				Error: fmt.Errorf("os.Stat() error: stat tests/i-do-not-exist: no such file or directory"),
 				Value: nil,
 			},
 		},

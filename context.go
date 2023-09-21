@@ -13,12 +13,13 @@ var (
 // ContextKey comprises keys used to access common information from a request context.
 type ContextKey string
 
+// ContextMap - Context Map type wrapped by Values.
 type ContextMap map[ContextKey]interface{}
 
-// ContextValuesKey - ...
+// ContextValuesKey - Context Values Key type.
 type ContextValuesKey string
 
-// Values - struct to store values on context
+// Values - struct to store values on context.
 type Values struct {
 	m ContextMap
 }
@@ -29,12 +30,12 @@ func NewValues(m ContextMap) Values {
 	}
 }
 
-// Get - Get value from Values struct
+// GetMap - GetMap value from Values struct.
 func (v Values) GetMap() ContextMap {
 	return v.m
 }
 
-// Get - Get value from Values struct
+// GetKey - GetKey value from Values struct.
 func (v Values) GetKey(key ContextKey) interface{} {
 	return v.m[key]
 }
@@ -48,13 +49,14 @@ func CreateContextWithValues(ctx context.Context, valuesKey ContextValuesKey, va
 	return context.WithValue(ctx, valuesKey, values)
 }
 
-// GetFieldsMap - get
-func GetFieldsMap(ctx context.Context, contextValuesKey ContextValuesKey, fields ...interface{}) (map[string]interface{}, error) {
+// GetFieldsMap - get field list from Context and append fields list to it.
+func GetFieldsMap(ctx context.Context, contextValuesKey ContextValuesKey,
+	fields ...interface{}) (map[string]interface{}, error) {
 	results := make(map[string]interface{})
 
 	ctxFields, ctxErr := GetContextValues(ctx, contextValuesKey)
 	if ctxErr != nil {
-		return nil, ctxErr
+		return nil, WrapError("GetFieldsMap->GetContextValues", ctxErr)
 	}
 
 	for k, v := range ctxFields.GetMap() {
@@ -71,7 +73,7 @@ func GetFieldsMap(ctx context.Context, contextValuesKey ContextValuesKey, fields
 	return results, nil
 }
 
-// GetContextValues contextValuesKey map stored in context
+// GetContextValues contextValuesKey map stored in context.
 func GetContextValues(ctx context.Context, contextValuesKey ContextValuesKey) (*Values, error) {
 	values := ctx.Value(contextValuesKey)
 	if values == nil {
@@ -83,7 +85,7 @@ func GetContextValues(ctx context.Context, contextValuesKey ContextValuesKey) (*
 	return &v, nil
 }
 
-// GetContextValuesKey get value for key from contextValuesKey map stored in context
+// GetContextValuesKey get value for key from contextValuesKey map stored in context.
 func GetContextValuesKey(ctx context.Context, contextValuesKey ContextValuesKey, key ContextKey) (interface{}, error) {
 	values, err := GetContextValues(ctx, contextValuesKey)
 	if err != nil {
@@ -112,8 +114,7 @@ func PairFields(fields ...interface{}) ContextMap {
 			value = fields[idx+1]
 		}
 
-		switch valueType := value.(type) {
-		case []interface{}:
+		if valueType, ok := value.([]interface{}); ok {
 			value = PairFields(valueType...)
 		}
 
