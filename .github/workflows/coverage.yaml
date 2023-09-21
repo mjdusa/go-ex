@@ -1,5 +1,5 @@
 ---
-name: Coverage - Generate Code Coverage Badge
+name: coverage - generate code coverage report
 
 on:
   workflow_dispatch:
