@@ -8,6 +8,7 @@ import (
 var (
 	ErrContextValuesNotFound    = errors.New("context values not found")
 	ErrContextValuesKeyNotFound = errors.New("key not found")
+	ErrTypeConversion           = errors.New("invalid type conversion")
 )
 
 // ContextKey comprises keys used to access common information from a request context.
@@ -80,9 +81,11 @@ func GetContextValues(ctx context.Context, contextValuesKey ContextValuesKey) (*
 		return nil, ErrContextValuesNotFound
 	}
 
-	v := values.(Values)
+	if v, ok := values.(Values); ok {
+		return &v, nil
+	}
 
-	return &v, nil
+	return nil, ErrTypeConversion
 }
 
 // GetContextValuesKey get value for key from contextValuesKey map stored in context.
@@ -103,10 +106,19 @@ func GetContextValuesKey(ctx context.Context, contextValuesKey ContextValuesKey,
 func PairFields(fields ...interface{}) ContextMap {
 	results := make(ContextMap)
 
-	end := len(fields)
+	end := 0
+	if fields != nil {
+		end = len(fields)
+	}
 
 	for idx := 0; idx < end; {
-		key := fields[idx].(string)
+		var key string
+
+		if k, ok := fields[idx].(string); ok {
+			key = k
+		} else {
+			continue
+		}
 
 		var value interface{}
 
