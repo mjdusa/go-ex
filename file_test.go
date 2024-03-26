@@ -1,13 +1,14 @@
-package ext
+package ext_test
 
 import (
 	"fmt"
 	"testing"
 
+	"github.com/mjdusa/go-ext"
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_FileSize(t *testing.T) {
+func TestFileSize(t *testing.T) {
 	type provided struct {
 		Data string
 	}
@@ -46,7 +47,7 @@ func Test_FileSize(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actualValue, actualError := FileSize(test.Provided.Data)
+		actualValue, actualError := ext.FileSize(test.Provided.Data)
 
 		if actualError != nil {
 			assert.Equal(t, test.Expected.Error.Error(), actualError.Error(), test.Name)
