@@ -1,12 +1,13 @@
-package ext
+package ext_test
 
 import (
 	"testing"
 
+	"github.com/mjdusa/go-ext"
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_Reverse(t *testing.T) {
+func TestReverse(t *testing.T) {
 	type provided struct {
 		Data string
 	}
@@ -43,13 +44,13 @@ func Test_Reverse(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := Reverse(test.Provided.Data)
+		actual := ext.Reverse(test.Provided.Data)
 
 		assert.Equal(t, test.Expected.Value, actual, test.Name)
 	}
 }
 
-func Test_Ellipse(t *testing.T) {
+func TestEllipse(t *testing.T) {
 	type provided struct {
 		Data    string
 		Max     int
@@ -116,13 +117,13 @@ func Test_Ellipse(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := Ellipse(test.Provided.Data, test.Provided.Max, test.Provided.Ellipse)
+		actual := ext.Ellipse(test.Provided.Data, test.Provided.Max, test.Provided.Ellipse)
 
 		assert.Equal(t, test.Expected.Value, actual, test.Name)
 	}
 }
 
-func Test_StringArrayContains(t *testing.T) {
+func TestStringArrayContains(t *testing.T) {
 	assert := assert.New(t)
 
 	testCases := []struct {
@@ -177,7 +178,7 @@ func Test_StringArrayContains(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		actual := StringArrayContains(tc.StringArray, tc.Value, tc.CaseInsensitive)
+		actual := ext.StringArrayContains(tc.StringArray, tc.Value, tc.CaseInsensitive)
 		assert.Equal(tc.Expected, actual, tc.Description)
 	}
 }

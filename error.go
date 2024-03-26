@@ -5,5 +5,8 @@ import (
 )
 
 func WrapError(message string, err error) error {
-	return fmt.Errorf("%s: %w", message, err)
+	if len(message) > 0 {
+		return fmt.Errorf("%s: %w", message, err)
+	}
+	return fmt.Errorf("%w", err)
 }

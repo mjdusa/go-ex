@@ -117,6 +117,8 @@ func PairFields(fields ...interface{}) ContextMap {
 		if k, ok := fields[idx].(string); ok {
 			key = k
 		} else {
+			idx += 2
+
 			continue
 		}
 

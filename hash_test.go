@@ -1,12 +1,13 @@
-package ext
+package ext_test
 
 import (
 	"testing"
 
+	"github.com/mjdusa/go-ext"
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_SHA256(t *testing.T) {
+func Test_HA256(t *testing.T) {
 	type provided struct {
 		Data string
 	}
@@ -33,13 +34,13 @@ func Test_SHA256(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := SHA256(test.Provided.Data)
+		actual := ext.SHA256(test.Provided.Data)
 
 		assert.Equal(t, test.Expected.Value, actual, test.Name)
 	}
 }
 
-func Test_SHA512(t *testing.T) {
+func TestSHA512(t *testing.T) {
 	type provided struct {
 		Data string
 	}
@@ -66,7 +67,7 @@ func Test_SHA512(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := SHA512(test.Provided.Data)
+		actual := ext.SHA512(test.Provided.Data)
 
 		assert.Equal(t, test.Expected.Value, actual, test.Name)
 	}
