@@ -408,6 +408,7 @@ func TestGetFieldsMap(t *testing.T) {
 		actualValue, actualErr := ext.GetFieldsMap(ctx, test.Provided.ValuesKey, test.Provided.Fields...)
 
 		assert.Equal(t, test.Expected.Error, actualErr, test.Name)
+		//nolint:nestif  // unit test
 		if actualValue == nil {
 			assert.Nil(t, test.Expected.Value, test.Name)
 		} else {
@@ -515,8 +516,8 @@ func TestGetContextValues(t *testing.T) {
 func TestGetContextValuesKey(t *testing.T) {
 	key := ext.ContextKey("key")
 	value := "value"
-	m := make(ext.ContextMap)
-	m[key] = value
+	cMap := make(ext.ContextMap)
+	cMap[key] = value
 
 	type provided struct {
 		ValuesKey  ext.ContextValuesKey
@@ -537,7 +538,7 @@ func TestGetContextValuesKey(t *testing.T) {
 			Name: "Test missing Values error",
 			Provided: provided{
 				ValuesKey:  ext.ContextValuesKey("Values"),
-				ContextMap: &m,
+				ContextMap: &cMap,
 				Key:        key,
 			},
 			Expected: expected{
