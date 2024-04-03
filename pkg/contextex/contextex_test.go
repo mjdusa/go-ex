@@ -1,25 +1,25 @@
-package ext_test
+package contextex_test
 
 import (
 	"context"
 	"testing"
 
-	"github.com/mjdusa/go-ext"
+	"github.com/mjdusa/go-ext/pkg/contextex"
 	"github.com/stretchr/testify/assert"
 )
 
 /*
 func TestNewValues(t *testing.T) {
-	empty := make(ext.ContextMap)
-	vals := make(ext.ContextMap)
+	empty := make(contextex.ContextMap)
+	vals := make(contextex.ContextMap)
 	vals["foo"] = "bar"
 
 	type provided struct {
-		Data *ext.ContextMap
+		Data *contextex.ContextMap
 	}
 	type expected struct {
 		Error error
-		Value *ext.ContextMap
+		Value *contextex.ContextMap
 	}
 
 	tests := []struct {
@@ -50,7 +50,7 @@ func TestNewValues(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := ext.NewValues(*test.Provided.Data)
+		actual := contextex.NewValues(*test.Provided.Data)
 
 		assert.Equal(t, len(*test.Expected.Value), len(actual.m), test.Name)
 
@@ -63,16 +63,16 @@ func TestNewValues(t *testing.T) {
 */
 
 func TestGetMap(t *testing.T) {
-	empty := make(ext.ContextMap)
-	vals := make(ext.ContextMap)
+	empty := make(contextex.ContextMap)
+	vals := make(contextex.ContextMap)
 	vals["foo"] = "bar"
 
 	type provided struct {
-		Data *ext.ContextMap
+		Data *contextex.ContextMap
 	}
 	type expected struct {
 		Error error
-		Value *ext.ContextMap
+		Value *contextex.ContextMap
 	}
 
 	tests := []struct {
@@ -103,7 +103,7 @@ func TestGetMap(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := ext.NewValues(*test.Provided.Data)
+		actual := contextex.NewValues(*test.Provided.Data)
 
 		assert.Equal(t, len(*test.Expected.Value), len(actual.GetMap()), test.Name)
 
@@ -115,16 +115,16 @@ func TestGetMap(t *testing.T) {
 }
 
 func TestGetKey(t *testing.T) {
-	empty := make(ext.ContextMap)
-	vals := make(ext.ContextMap)
+	empty := make(contextex.ContextMap)
+	vals := make(contextex.ContextMap)
 	vals["foo"] = "bar"
 
 	type provided struct {
-		Data *ext.ContextMap
+		Data *contextex.ContextMap
 	}
 	type expected struct {
 		Error error
-		Value *ext.ContextMap
+		Value *contextex.ContextMap
 	}
 
 	tests := []struct {
@@ -155,7 +155,7 @@ func TestGetKey(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := ext.NewValues(*test.Provided.Data)
+		actual := contextex.NewValues(*test.Provided.Data)
 
 		assert.Equal(t, len(*test.Expected.Value), len(actual.GetMap()), test.Name)
 
@@ -167,17 +167,17 @@ func TestGetKey(t *testing.T) {
 }
 
 func TestCreateContextWithValues(t *testing.T) {
-	empty := make(ext.ContextMap)
-	vals := make(ext.ContextMap)
+	empty := make(contextex.ContextMap)
+	vals := make(contextex.ContextMap)
 	vals["foo"] = "bar"
 
 	type provided struct {
-		ValuesKey ext.ContextValuesKey
-		Data      *ext.ContextMap
+		ValuesKey contextex.ContextValuesKey
+		Data      *contextex.ContextMap
 	}
 	type expected struct {
 		Error error
-		Value *ext.ContextMap
+		Value *contextex.ContextMap
 	}
 
 	tests := []struct {
@@ -210,11 +210,11 @@ func TestCreateContextWithValues(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		values := ext.NewValues(*test.Provided.Data)
+		values := contextex.NewValues(*test.Provided.Data)
 		ctx := context.Background()
-		ctx = ext.CreateContextWithValues(ctx, test.Provided.ValuesKey, values)
+		ctx = contextex.CreateContextWithValues(ctx, test.Provided.ValuesKey, values)
 
-		actualValues, actualErr := ext.GetContextValues(ctx, test.Provided.ValuesKey)
+		actualValues, actualErr := contextex.GetContextValues(ctx, test.Provided.ValuesKey)
 
 		assert.Equal(t, test.Expected.Error, actualErr, test.Name)
 		if actualValues != nil {
@@ -232,17 +232,17 @@ func TestCreateContextWithValues(t *testing.T) {
 }
 
 func TestCreateContextWithMap(t *testing.T) {
-	empty := make(ext.ContextMap)
-	vals := make(ext.ContextMap)
+	empty := make(contextex.ContextMap)
+	vals := make(contextex.ContextMap)
 	vals["foo"] = "bar"
 
 	type provided struct {
-		ValuesKey ext.ContextValuesKey
-		Data      *ext.ContextMap
+		ValuesKey contextex.ContextValuesKey
+		Data      *contextex.ContextMap
 	}
 	type expected struct {
 		Error error
-		Value *ext.ContextMap
+		Value *contextex.ContextMap
 	}
 
 	tests := []struct {
@@ -276,9 +276,9 @@ func TestCreateContextWithMap(t *testing.T) {
 
 	for _, test := range tests {
 		ctx := context.Background()
-		ctx = ext.CreateContextWithMap(ctx, test.Provided.ValuesKey, *test.Provided.Data)
+		ctx = contextex.CreateContextWithMap(ctx, test.Provided.ValuesKey, *test.Provided.Data)
 
-		actualValues, actualErr := ext.GetContextValues(ctx, test.Provided.ValuesKey)
+		actualValues, actualErr := contextex.GetContextValues(ctx, test.Provided.ValuesKey)
 
 		assert.Equal(t, test.Expected.Error, actualErr, test.Name)
 		if actualValues != nil {
@@ -320,13 +320,13 @@ func TestGetFieldsMap(t *testing.T) {
 	badKeyResponse[key0] = value0
 	badKeyResponse[key2] = value2
 
-	emptyMap := make(ext.ContextMap)
-	valsMap := make(ext.ContextMap)
-	valsMap[ext.ContextKey(key0)] = value0
+	emptyMap := make(contextex.ContextMap)
+	valsMap := make(contextex.ContextMap)
+	valsMap[contextex.ContextKey(key0)] = value0
 
 	type provided struct {
-		ValuesKey  ext.ContextValuesKey
-		ContextMap *ext.ContextMap
+		ValuesKey  contextex.ContextValuesKey
+		ContextMap *contextex.ContextMap
 		Fields     []interface{}
 	}
 	type expected struct {
@@ -342,7 +342,7 @@ func TestGetFieldsMap(t *testing.T) {
 		{
 			Name: "Test empty map, nil fields",
 			Provided: provided{
-				ValuesKey:  ext.ContextValuesKey("valuesKey"),
+				ValuesKey:  contextex.ContextValuesKey("valuesKey"),
 				ContextMap: &emptyMap,
 				Fields:     nil,
 			},
@@ -354,7 +354,7 @@ func TestGetFieldsMap(t *testing.T) {
 		{
 			Name: "Test empty map, populated fields",
 			Provided: provided{
-				ValuesKey:  ext.ContextValuesKey("valuesKey"),
+				ValuesKey:  contextex.ContextValuesKey("valuesKey"),
 				ContextMap: &emptyMap,
 				Fields:     goodFields,
 			},
@@ -366,7 +366,7 @@ func TestGetFieldsMap(t *testing.T) {
 		{
 			Name: "Test populated map, nil fields",
 			Provided: provided{
-				ValuesKey:  ext.ContextValuesKey("valuesKey"),
+				ValuesKey:  contextex.ContextValuesKey("valuesKey"),
 				ContextMap: &valsMap,
 				Fields:     nil,
 			},
@@ -378,7 +378,7 @@ func TestGetFieldsMap(t *testing.T) {
 		{
 			Name: "Test populated map, populated fields",
 			Provided: provided{
-				ValuesKey:  ext.ContextValuesKey("valuesKey"),
+				ValuesKey:  contextex.ContextValuesKey("valuesKey"),
 				ContextMap: &valsMap,
 				Fields:     goodFields,
 			},
@@ -390,7 +390,7 @@ func TestGetFieldsMap(t *testing.T) {
 		{
 			Name: "Test populated map, populated fields",
 			Provided: provided{
-				ValuesKey:  ext.ContextValuesKey("valuesKey"),
+				ValuesKey:  contextex.ContextValuesKey("valuesKey"),
 				ContextMap: &valsMap,
 				Fields:     badKeyFeilds,
 			},
@@ -403,9 +403,9 @@ func TestGetFieldsMap(t *testing.T) {
 
 	for _, test := range tests {
 		ctx := context.Background()
-		ctx = ext.CreateContextWithMap(ctx, test.Provided.ValuesKey, *test.Provided.ContextMap)
+		ctx = contextex.CreateContextWithMap(ctx, test.Provided.ValuesKey, *test.Provided.ContextMap)
 
-		actualValue, actualErr := ext.GetFieldsMap(ctx, test.Provided.ValuesKey, test.Provided.Fields...)
+		actualValue, actualErr := contextex.GetFieldsMap(ctx, test.Provided.ValuesKey, test.Provided.Fields...)
 
 		assert.Equal(t, test.Expected.Error, actualErr, test.Name)
 		//nolint:nestif  // unit test
@@ -430,11 +430,11 @@ func TestGetFieldsMap(t *testing.T) {
 }
 
 func TestGetFieldsMapError(t *testing.T) {
-	emptyMap := make(ext.ContextMap)
+	emptyMap := make(contextex.ContextMap)
 
 	type provided struct {
-		ValuesKey  ext.ContextValuesKey
-		ContextMap *ext.ContextMap
+		ValuesKey  contextex.ContextValuesKey
+		ContextMap *contextex.ContextMap
 		Fields     []interface{}
 	}
 	type expected struct {
@@ -450,12 +450,12 @@ func TestGetFieldsMapError(t *testing.T) {
 		{
 			Name: "Test missing Values error",
 			Provided: provided{
-				ValuesKey:  ext.ContextValuesKey("valuesKey"),
+				ValuesKey:  contextex.ContextValuesKey("valuesKey"),
 				ContextMap: &emptyMap,
 				Fields:     nil,
 			},
 			Expected: expected{
-				Error: ext.WrapError("GetFieldsMap->GetContextValues", ext.ErrContextValuesNotFound),
+				Error: contextex.WrapError("GetFieldsMap->GetContextValues", contextex.ErrContextValuesNotFound),
 				Value: nil,
 			},
 		},
@@ -464,7 +464,7 @@ func TestGetFieldsMapError(t *testing.T) {
 	for _, test := range tests {
 		ctx := context.Background()
 
-		actualValue, actualErr := ext.GetFieldsMap(ctx, test.Provided.ValuesKey, test.Provided.Fields...)
+		actualValue, actualErr := contextex.GetFieldsMap(ctx, test.Provided.ValuesKey, test.Provided.Fields...)
 
 		assert.Equal(t, test.Expected.Error.Error(), actualErr.Error(), test.Name)
 		assert.Nil(t, actualValue, test.Name)
@@ -472,11 +472,11 @@ func TestGetFieldsMapError(t *testing.T) {
 }
 
 func TestGetContextValues(t *testing.T) {
-	emptyMap := make(ext.ContextMap)
+	emptyMap := make(contextex.ContextMap)
 
 	type provided struct {
-		ValuesKey  ext.ContextValuesKey
-		ContextMap *ext.ContextMap
+		ValuesKey  contextex.ContextValuesKey
+		ContextMap *contextex.ContextMap
 		Fields     []interface{}
 	}
 	type expected struct {
@@ -492,12 +492,12 @@ func TestGetContextValues(t *testing.T) {
 		{
 			Name: "Test missing Values error",
 			Provided: provided{
-				ValuesKey:  ext.ContextValuesKey("valuesKey"),
+				ValuesKey:  contextex.ContextValuesKey("valuesKey"),
 				ContextMap: &emptyMap,
 				Fields:     nil,
 			},
 			Expected: expected{
-				Error: ext.WrapError("", ext.ErrContextValuesNotFound),
+				Error: contextex.ErrContextValuesNotFound,
 				Value: nil,
 			},
 		},
@@ -506,7 +506,7 @@ func TestGetContextValues(t *testing.T) {
 	for _, test := range tests {
 		ctx := context.Background()
 
-		actualValue, actualErr := ext.GetContextValues(ctx, test.Provided.ValuesKey)
+		actualValue, actualErr := contextex.GetContextValues(ctx, test.Provided.ValuesKey)
 
 		assert.Equal(t, test.Expected.Error.Error(), actualErr.Error(), test.Name)
 		assert.Nil(t, actualValue, test.Name)
@@ -514,15 +514,15 @@ func TestGetContextValues(t *testing.T) {
 }
 
 func TestGetContextValuesKey(t *testing.T) {
-	key := ext.ContextKey("key")
+	key := contextex.ContextKey("key")
 	value := "value"
-	cMap := make(ext.ContextMap)
+	cMap := make(contextex.ContextMap)
 	cMap[key] = value
 
 	type provided struct {
-		ValuesKey  ext.ContextValuesKey
-		ContextMap *ext.ContextMap
-		Key        ext.ContextKey
+		ValuesKey  contextex.ContextValuesKey
+		ContextMap *contextex.ContextMap
+		Key        contextex.ContextKey
 	}
 	type expected struct {
 		Error error
@@ -537,7 +537,7 @@ func TestGetContextValuesKey(t *testing.T) {
 		{
 			Name: "Test missing Values error",
 			Provided: provided{
-				ValuesKey:  ext.ContextValuesKey("Values"),
+				ValuesKey:  contextex.ContextValuesKey("Values"),
 				ContextMap: &cMap,
 				Key:        key,
 			},
@@ -550,9 +550,9 @@ func TestGetContextValuesKey(t *testing.T) {
 
 	for _, test := range tests {
 		ctx := context.Background()
-		ctx = ext.CreateContextWithMap(ctx, test.Provided.ValuesKey, *test.Provided.ContextMap)
+		ctx = contextex.CreateContextWithMap(ctx, test.Provided.ValuesKey, *test.Provided.ContextMap)
 
-		actualValue, actualErr := ext.GetContextValuesKey(ctx, test.Provided.ValuesKey, test.Provided.Key)
+		actualValue, actualErr := contextex.GetContextValuesKey(ctx, test.Provided.ValuesKey, test.Provided.Key)
 
 		assert.Equal(t, test.Expected.Error, actualErr, test.Name)
 		assert.Equal(t, test.Expected.Value, actualValue, test.Name)
@@ -560,12 +560,12 @@ func TestGetContextValuesKey(t *testing.T) {
 }
 
 func TestGetContextValuesKeyError(t *testing.T) {
-	emptyMap := make(ext.ContextMap)
+	emptyMap := make(contextex.ContextMap)
 
 	type provided struct {
-		ValuesKey  ext.ContextValuesKey
-		ContextMap *ext.ContextMap
-		Key        ext.ContextKey
+		ValuesKey  contextex.ContextValuesKey
+		ContextMap *contextex.ContextMap
+		Key        contextex.ContextKey
 	}
 	type expected struct {
 		Error error
@@ -580,24 +580,24 @@ func TestGetContextValuesKeyError(t *testing.T) {
 		{
 			Name: "Test missing Values error",
 			Provided: provided{
-				ValuesKey:  ext.ContextValuesKey(""),
+				ValuesKey:  contextex.ContextValuesKey(""),
 				ContextMap: &emptyMap,
-				Key:        ext.ContextKey(""),
+				Key:        contextex.ContextKey(""),
 			},
 			Expected: expected{
-				Error: ext.ErrContextValuesNotFound,
+				Error: contextex.ErrContextValuesNotFound,
 				Value: nil,
 			},
 		},
 		{
 			Name: "Test missing Key error",
 			Provided: provided{
-				ValuesKey:  ext.ContextValuesKey("valuesKey"),
+				ValuesKey:  contextex.ContextValuesKey("valuesKey"),
 				ContextMap: &emptyMap,
-				Key:        ext.ContextKey("key"),
+				Key:        contextex.ContextKey("key"),
 			},
 			Expected: expected{
-				Error: ext.ErrContextValuesKeyNotFound,
+				Error: contextex.ErrContextValuesKeyNotFound,
 				Value: nil,
 			},
 		},
@@ -606,11 +606,11 @@ func TestGetContextValuesKeyError(t *testing.T) {
 	for _, test := range tests {
 		ctx := context.Background()
 		if len(test.Provided.ValuesKey) > 0 {
-			cm := make(ext.ContextMap)
-			ctx = ext.CreateContextWithMap(ctx, test.Provided.ValuesKey, cm)
+			cm := make(contextex.ContextMap)
+			ctx = contextex.CreateContextWithMap(ctx, test.Provided.ValuesKey, cm)
 		}
 
-		actualValue, actualErr := ext.GetContextValuesKey(ctx, test.Provided.ValuesKey, test.Provided.Key)
+		actualValue, actualErr := contextex.GetContextValuesKey(ctx, test.Provided.ValuesKey, test.Provided.Key)
 
 		assert.Equal(t, test.Expected.Error, actualErr, test.Name)
 		assert.Nil(t, actualValue, test.Name)

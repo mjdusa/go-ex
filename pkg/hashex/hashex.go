@@ -1,4 +1,4 @@
-package ext
+package hashex
 
 import (
 	"crypto/sha256"

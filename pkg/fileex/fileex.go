@@ -1,6 +1,7 @@
-package ext
+package fileex
 
 import (
+	"fmt"
 	"io/fs"
 	"os"
 )
@@ -37,6 +38,10 @@ const (
 	OSAllRW  = OSAllR | OSAllW
 	OSAllRWX = OSAllRW | OSGroupX
 )
+
+func WrapError(message string, err error) error {
+	return fmt.Errorf("%s: %w", message, err)
+}
 
 // ReadAllFile - Read file into byte array.
 func ReadAllFile(fqfn string) ([]byte, error) {

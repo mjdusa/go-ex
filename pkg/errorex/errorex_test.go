@@ -1,10 +1,10 @@
-package ext_test
+package errorex_test
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/mjdusa/go-ext"
+	"github.com/mjdusa/go-ext/pkg/errorex"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -14,7 +14,7 @@ func TestWrapError(t *testing.T) {
 
 	expected := fmt.Errorf("%s: %w", msg, err)
 
-	actual := ext.WrapError(msg, err)
+	actual := errorex.WrapError(msg, err)
 
 	assert.Equal(t, expected, actual)
 }
@@ -25,7 +25,7 @@ func TestWrapErrorNoMessage(t *testing.T) {
 
 	expected := fmt.Errorf("%w", err)
 
-	actual := ext.WrapError(msg, err)
+	actual := errorex.WrapError(msg, err)
 
 	assert.Equal(t, expected, actual)
 }

@@ -1,13 +1,13 @@
-package ext_test
+package hashex_test
 
 import (
 	"testing"
 
-	"github.com/mjdusa/go-ext"
+	"github.com/mjdusa/go-ext/pkg/hashex"
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_HA256(t *testing.T) {
+func TestSHA256(t *testing.T) {
 	type provided struct {
 		Data string
 	}
@@ -34,7 +34,7 @@ func Test_HA256(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := ext.SHA256(test.Provided.Data)
+		actual := hashex.SHA256(test.Provided.Data)
 
 		assert.Equal(t, test.Expected.Value, actual, test.Name)
 	}
@@ -68,7 +68,7 @@ func TestSHA512(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := ext.SHA512(test.Provided.Data)
+		actual := hashex.SHA512(test.Provided.Data)
 
 		assert.Equal(t, test.Expected.Value, actual, test.Name)
 	}

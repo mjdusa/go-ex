@@ -14,6 +14,9 @@ on:
     branches:
       - main
 
+# Don't grant any access by default
+permissions: {}
+
 env:
   target_ref: ${{ github.head_ref || github.ref_name }}
   GO111MODULE: on
@@ -29,6 +32,14 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
+    ############################################
+    # Grant status permission for MULTI_STATUS #
+    ############################################
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+
     steps:
       - name: actions/checkout
         uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # v4.1.2
@@ -39,6 +50,15 @@ jobs:
           persist-credentials: false  # otherwise, the token used is the GITHUB_TOKEN, instead of your
           #                             personal access token.
           fetch-depth: 0
+
+      - name: Load super-linter configuration
+        run: |
+          cat .github/super-linter.env >> "${GITHUB_ENV}"
+
+      - name: super-linter/super-linter
+        uses: super-linter/super-linter@e0fc164bba85f4b58c6cd17ba1dfd435d01e8a06  # v6.3.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: actions/setup-go
         uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491  # v5.0.0
@@ -79,7 +99,7 @@ jobs:
             --tests=true
             --timeout=1m
             --config=.github/linters/.golangci.yml
-            --issues-exit-code=0
+            --issues-exit-code=1
 
           # Optional: show only new issues if it's a pull request. The default value is `false`.
           # only-new-issues: true

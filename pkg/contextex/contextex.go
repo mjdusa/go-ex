@@ -1,8 +1,9 @@
-package ext
+package contextex
 
 import (
 	"context"
 	"errors"
+	"fmt"
 )
 
 var (
@@ -23,6 +24,10 @@ type ContextValuesKey string
 // Values - struct to store values on context.
 type Values struct {
 	m ContextMap
+}
+
+func WrapError(message string, err error) error {
+	return fmt.Errorf("%s: %w", message, err)
 }
 
 func NewValues(m ContextMap) Values {

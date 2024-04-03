@@ -1,4 +1,4 @@
-package ext
+package mapex
 
 // SIKey comprises keys used to access common information from a SIMap.
 type SIKey string

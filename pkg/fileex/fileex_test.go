@@ -1,14 +1,28 @@
-package ext_test
+package fileex_test
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/mjdusa/go-ext"
+	"github.com/mjdusa/go-ext/pkg/fileex"
 	"github.com/stretchr/testify/assert"
 )
 
+func TestWrapError(t *testing.T) {
+	err := fmt.Errorf("TestWrapError: %d", 99)
+	msg := "message"
+
+	expected := fmt.Errorf("%s: %w", msg, err)
+
+	actual := fileex.WrapError(msg, err)
+
+	assert.Equal(t, expected, actual)
+}
+
 func TestFileSize(t *testing.T) {
+	existingFile := "../../tests/text-test.data"
+	missingFile := "../../tests/i-do-not-exist"
+
 	type provided struct {
 		Data string
 	}
@@ -27,7 +41,7 @@ func TestFileSize(t *testing.T) {
 		{
 			Name: "FileSize test - good file",
 			Provided: provided{
-				Data: "tests/text-test.data",
+				Data: existingFile,
 			},
 			Expected: expected{
 				Error: nil,
@@ -37,17 +51,17 @@ func TestFileSize(t *testing.T) {
 		{
 			Name: "FileSize test - bad file",
 			Provided: provided{
-				Data: "tests/i-do-not-exist",
+				Data: missingFile,
 			},
 			Expected: expected{
-				Error: fmt.Errorf("os.Stat() error: stat tests/i-do-not-exist: no such file or directory"),
+				Error: fmt.Errorf("os.Stat() error: stat %s: no such file or directory", missingFile),
 				Value: nil,
 			},
 		},
 	}
 
 	for _, test := range tests {
-		actualValue, actualError := ext.FileSize(test.Provided.Data)
+		actualValue, actualError := fileex.FileSize(test.Provided.Data)
 
 		if actualError != nil {
 			assert.Equal(t, test.Expected.Error.Error(), actualError.Error(), test.Name)

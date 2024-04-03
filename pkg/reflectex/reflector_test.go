@@ -1,9 +1,9 @@
-package ext_test
+package reflectex_test
 
 import (
 	"testing"
 
-	"github.com/mjdusa/go-ext"
+	"github.com/mjdusa/go-ext/pkg/reflectex"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -99,7 +99,7 @@ func TestReflector(t *testing.T) {
 
 	for _, tst := range tests {
 		t.Run(tst.name, func(t *testing.T) {
-			got := ext.Reflector(tst.data)
+			got := reflectex.Reflector(tst.data)
 
 			assert.Equal(t, tst.want, got, "name: %s", tst.name)
 		})

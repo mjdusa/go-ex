@@ -1,9 +1,9 @@
-package ext_test
+package stringex_test
 
 import (
 	"testing"
 
-	"github.com/mjdusa/go-ext"
+	"github.com/mjdusa/go-ext/pkg/stringex"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -44,7 +44,7 @@ func TestReverse(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := ext.Reverse(test.Provided.Data)
+		actual := stringex.Reverse(test.Provided.Data)
 
 		assert.Equal(t, test.Expected.Value, actual, test.Name)
 	}
@@ -117,7 +117,7 @@ func TestEllipse(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actual := ext.Ellipse(test.Provided.Data, test.Provided.Max, test.Provided.Ellipse)
+		actual := stringex.Ellipse(test.Provided.Data, test.Provided.Max, test.Provided.Ellipse)
 
 		assert.Equal(t, test.Expected.Value, actual, test.Name)
 	}
@@ -178,7 +178,7 @@ func TestStringArrayContains(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		actual := ext.StringArrayContains(tc.StringArray, tc.Value, tc.CaseInsensitive)
+		actual := stringex.StringArrayContains(tc.StringArray, tc.Value, tc.CaseInsensitive)
 		assert.Equal(tc.Expected, actual, tc.Description)
 	}
 }
