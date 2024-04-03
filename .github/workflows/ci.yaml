@@ -144,3 +144,7 @@ jobs:
           name: test-reports
           path: ./coverage.*
           retention-days: 180
+
+      - name: Show Artifact ID
+        run: |
+          echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }}'
