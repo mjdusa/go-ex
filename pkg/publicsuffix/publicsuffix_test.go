@@ -11,9 +11,9 @@ import (
 )
 
 var (
-	normalTimeout = time.Duration(5 * time.Second)
-	shortTimeout  = time.Duration(1 * time.Nanosecond)
-	cacheFileName = "../../tests/tld.cache"
+	normalTimeout = 5 * time.Second         //nolint:gochecknoglobals  // Test time.Duration used by multiple tests
+	shortTimeout  = 1 * time.Nanosecond     //nolint:gochecknoglobals  // Test time.Duration used by multiple tests
+	cacheFileName = "../../tests/tld.cache" //nolint:gochecknoglobals  // Test file path used by multiple tests
 )
 
 func TestWrapError(t *testing.T) {
@@ -31,10 +31,10 @@ func TestLoadTLDsTimeout(t *testing.T) {
 	assert := assert.New(t)
 	ctx := context.Background()
 	urls := []string{publicsuffix.MainPublicSuffixListFile, publicsuffix.BackupPublicSuffixListFile}
-	cacheFileName := ""
+	emptyFileName := ""
 	useASCII := true
 
-	actualList, actualErr := publicsuffix.LoadTLDs(ctx, urls, shortTimeout, cacheFileName, useASCII)
+	actualList, actualErr := publicsuffix.LoadTLDs(ctx, urls, shortTimeout, emptyFileName, useASCII)
 
 	assert.NotNil(actualErr, "Error Not Nil")
 	assert.Nil(actualList, "List Nil")

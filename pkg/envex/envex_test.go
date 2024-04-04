@@ -12,7 +12,7 @@ import (
 func Test_SafeParseInt(t *testing.T) {
 	assert := assert.New(t)
 
-	testCases := []struct {
+	testcases := []struct {
 		IntString    string
 		DefaultValue int64
 		Expected     int64
@@ -50,10 +50,10 @@ func Test_SafeParseInt(t *testing.T) {
 		},
 	}
 
-	for _, tc := range testCases {
-		actual := envex.SafeParseInt(tc.IntString, 10, 64, tc.DefaultValue)
+	for _, tcase := range testcases {
+		actual := envex.SafeParseInt(tcase.IntString, 10, 64, tcase.DefaultValue)
 
-		assert.Equal(tc.Expected, actual, tc.Description)
+		assert.Equal(tcase.Expected, actual, tcase.Description)
 	}
 }
 
@@ -61,7 +61,7 @@ func Test_GetEnvBool(t *testing.T) {
 	assert := assert.New(t)
 	envBadValue := "falsely"
 	envGoodValue := "true"
-	testCases := []struct {
+	testcases := []struct {
 		EnvKey       string
 		EnvValue     *string
 		DefaultValue bool
@@ -98,16 +98,16 @@ func Test_GetEnvBool(t *testing.T) {
 		},
 	}
 
-	for _, tc := range testCases {
-		if tc.EnvValue == nil {
-			os.Unsetenv(tc.EnvKey)
+	for _, tcase := range testcases {
+		if tcase.EnvValue == nil {
+			os.Unsetenv(tcase.EnvKey)
 		} else {
-			os.Setenv(tc.EnvKey, *tc.EnvValue)
+			os.Setenv(tcase.EnvKey, *tcase.EnvValue)
 		}
 
-		actual := envex.GetEnvBool(tc.EnvKey, tc.DefaultValue)
+		actual := envex.GetEnvBool(tcase.EnvKey, tcase.DefaultValue)
 
-		assert.Equal(tc.Expected, actual, tc.Description)
+		assert.Equal(tcase.Expected, actual, tcase.Description)
 	}
 }
 
@@ -115,7 +115,7 @@ func Test_GetEnvInt64(t *testing.T) {
 	assert := assert.New(t)
 	envBadValue := "bad"
 	envGoodValue := "77777777777"
-	testCases := []struct {
+	testcases := []struct {
 		EnvKey       string
 		EnvValue     *string
 		DefaultValue int64
@@ -152,16 +152,16 @@ func Test_GetEnvInt64(t *testing.T) {
 		},
 	}
 
-	for _, tc := range testCases {
-		if tc.EnvValue == nil {
-			os.Unsetenv(tc.EnvKey)
+	for _, tcase := range testcases {
+		if tcase.EnvValue == nil {
+			os.Unsetenv(tcase.EnvKey)
 		} else {
-			os.Setenv(tc.EnvKey, *tc.EnvValue)
+			os.Setenv(tcase.EnvKey, *tcase.EnvValue)
 		}
 
-		actual := envex.GetEnvInt64(tc.EnvKey, 10, 64, tc.DefaultValue)
+		actual := envex.GetEnvInt64(tcase.EnvKey, 10, 64, tcase.DefaultValue)
 
-		assert.Equal(tc.Expected, actual, tc.Description)
+		assert.Equal(tcase.Expected, actual, tcase.Description)
 	}
 }
 
@@ -169,7 +169,7 @@ func Test_GetEnvUInt64(t *testing.T) {
 	assert := assert.New(t)
 	envBadValue := "bad"
 	envGoodValue := "77777777777"
-	testCases := []struct {
+	testcases := []struct {
 		EnvKey       string
 		EnvValue     *string
 		DefaultValue uint64
@@ -206,23 +206,23 @@ func Test_GetEnvUInt64(t *testing.T) {
 		},
 	}
 
-	for _, tc := range testCases {
-		if tc.EnvValue == nil {
-			os.Unsetenv(tc.EnvKey)
+	for _, tcase := range testcases {
+		if tcase.EnvValue == nil {
+			os.Unsetenv(tcase.EnvKey)
 		} else {
-			os.Setenv(tc.EnvKey, *tc.EnvValue)
+			os.Setenv(tcase.EnvKey, *tcase.EnvValue)
 		}
 
-		actual := envex.GetEnvUInt64(tc.EnvKey, 10, 64, tc.DefaultValue)
+		actual := envex.GetEnvUInt64(tcase.EnvKey, 10, 64, tcase.DefaultValue)
 
-		assert.Equal(tc.Expected, actual, tc.Description)
+		assert.Equal(tcase.Expected, actual, tcase.Description)
 	}
 }
 
 func Test_GetEnvString(t *testing.T) {
 	assert := assert.New(t)
 	envValue := "envValue"
-	testCases := []struct {
+	testcases := []struct {
 		EnvKey       string
 		EnvValue     *string
 		DefaultValue string
@@ -252,16 +252,16 @@ func Test_GetEnvString(t *testing.T) {
 		},
 	}
 
-	for _, tc := range testCases {
-		if tc.EnvValue == nil {
-			os.Unsetenv(tc.EnvKey)
+	for _, tcase := range testcases {
+		if tcase.EnvValue == nil {
+			os.Unsetenv(tcase.EnvKey)
 		} else {
-			os.Setenv(tc.EnvKey, *tc.EnvValue)
+			os.Setenv(tcase.EnvKey, *tcase.EnvValue)
 		}
 
-		actual := envex.GetEnvString(tc.EnvKey, tc.DefaultValue)
+		actual := envex.GetEnvString(tcase.EnvKey, tcase.DefaultValue)
 
-		assert.Equal(tc.Expected, actual, tc.Description)
+		assert.Equal(tcase.Expected, actual, tcase.Description)
 	}
 }
 
@@ -269,7 +269,7 @@ func Test_GetEnvDuration(t *testing.T) {
 	assert := assert.New(t)
 	envBadValue := "bad"
 	envGoodValue := "777777ns"
-	testCases := []struct {
+	testcases := []struct {
 		EnvKey       string
 		EnvValue     *string
 		DefaultValue time.Duration
@@ -301,21 +301,21 @@ func Test_GetEnvDuration(t *testing.T) {
 			EnvKey:       "exampleKey",
 			EnvValue:     &envGoodValue,
 			DefaultValue: time.Duration(777),
-			Expected:     time.Duration(777777 * time.Nanosecond),
+			Expected:     777777 * time.Nanosecond,
 			Description:  "good env, good value",
 		},
 	}
 
-	for _, tc := range testCases {
-		if tc.EnvValue == nil {
-			os.Unsetenv(tc.EnvKey)
+	for _, tcase := range testcases {
+		if tcase.EnvValue == nil {
+			os.Unsetenv(tcase.EnvKey)
 		} else {
-			os.Setenv(tc.EnvKey, *tc.EnvValue)
+			os.Setenv(tcase.EnvKey, *tcase.EnvValue)
 		}
 
-		actual := envex.GetEnvDuration(tc.EnvKey, tc.DefaultValue)
+		actual := envex.GetEnvDuration(tcase.EnvKey, tcase.DefaultValue)
 
-		assert.Equal(tc.Expected, actual, tc.Description)
+		assert.Equal(tcase.Expected, actual, tcase.Description)
 	}
 }
 
@@ -330,7 +330,7 @@ func Test_GetEnvTime(t *testing.T) {
 	}
 
 	now := time.Now()
-	testCases := []struct {
+	testcases := []struct {
 		Layout       string
 		EnvKey       string
 		EnvValue     *string
@@ -380,15 +380,15 @@ func Test_GetEnvTime(t *testing.T) {
 		},
 	}
 
-	for _, tc := range testCases {
-		if tc.EnvValue == nil {
-			os.Unsetenv(tc.EnvKey)
+	for _, tcase := range testcases {
+		if tcase.EnvValue == nil {
+			os.Unsetenv(tcase.EnvKey)
 		} else {
-			os.Setenv(tc.EnvKey, *tc.EnvValue)
+			os.Setenv(tcase.EnvKey, *tcase.EnvValue)
 		}
 
-		actual := envex.GetEnvTime(tc.EnvKey, tc.Layout, tc.DefaultValue)
+		actual := envex.GetEnvTime(tcase.EnvKey, tcase.Layout, tcase.DefaultValue)
 
-		assert.Equal(tc.Expected, actual, tc.Description)
+		assert.Equal(tcase.Expected, actual, tcase.Description)
 	}
 }
