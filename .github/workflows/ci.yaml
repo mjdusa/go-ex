@@ -2,17 +2,16 @@
 name: CI
 
 on:
-  workflow_dispatch:
-
+  # Scan on-demand through GitHub Actions interface:
+  workflow_dispatch: {}
+  # Scan workflow call:
   workflow_call:
-
+  # Scan mainline branches and report all findings:
   push:
-    branches:
-      - main
-
+    branches: ["master", "main"]
+  # Scan changed files in PRs (diff-aware scanning):
   pull_request:
-    branches:
-      - main
+    branches: ["master", "main"]
 
 # Don't grant any access by default
 permissions: {}
@@ -53,7 +52,7 @@ jobs:
 
       - name: Load super-linter configuration
         run: |
-          cat .github/super-linter.env >> "${GITHUB_ENV}"
+          cat ".github/super-linter.env" >> "${GITHUB_ENV}"
 
       - name: super-linter/super-linter
         uses: super-linter/super-linter@92e2606383320f72e6129f8a50d8537cf9c84ed6  # v6.3.1
