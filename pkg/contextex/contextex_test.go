@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/mjdusa/go-ext/pkg/contextex"
+	"github.com/mjdusa/go-ex/pkg/contextex"
 	"github.com/stretchr/testify/assert"
 )
 

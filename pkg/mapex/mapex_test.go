@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/mjdusa/go-ext/pkg/mapex"
+	"github.com/mjdusa/go-ex/pkg/mapex"
 	"github.com/stretchr/testify/assert"
 )
 

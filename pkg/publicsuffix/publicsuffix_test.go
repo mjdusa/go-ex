@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mjdusa/go-ext/pkg/publicsuffix"
+	"github.com/mjdusa/go-ex/pkg/publicsuffix"
 	"github.com/stretchr/testify/assert"
 )
 

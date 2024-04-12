@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mjdusa/go-ext/pkg/fileex"
-	"github.com/mjdusa/go-ext/pkg/netex/httpex"
-	"github.com/mjdusa/go-ext/pkg/punycode"
+	"github.com/mjdusa/go-ex/pkg/fileex"
+	"github.com/mjdusa/go-ex/pkg/netex/httpex"
+	"github.com/mjdusa/go-ex/pkg/punycode"
 )
 
 const (

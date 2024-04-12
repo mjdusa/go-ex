@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/mjdusa/go-ext/pkg/netex/httpex"
+	"github.com/mjdusa/go-ex/pkg/netex/httpex"
 	"github.com/stretchr/testify/assert"
 )
 

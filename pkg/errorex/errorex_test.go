@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/mjdusa/go-ext/pkg/errorex"
+	"github.com/mjdusa/go-ex/pkg/errorex"
 	"github.com/stretchr/testify/assert"
 )
 

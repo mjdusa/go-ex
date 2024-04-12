@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mjdusa/go-ext/pkg/envex"
+	"github.com/mjdusa/go-ex/pkg/envex"
 	"github.com/stretchr/testify/assert"
 )
 

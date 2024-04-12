@@ -3,7 +3,7 @@ package stringex_test
 import (
 	"testing"
 
-	"github.com/mjdusa/go-ext/pkg/stringex"
+	"github.com/mjdusa/go-ex/pkg/stringex"
 	"github.com/stretchr/testify/assert"
 )
 

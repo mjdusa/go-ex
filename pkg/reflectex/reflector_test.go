@@ -3,7 +3,7 @@ package reflectex_test
 import (
 	"testing"
 
-	"github.com/mjdusa/go-ext/pkg/reflectex"
+	"github.com/mjdusa/go-ex/pkg/reflectex"
 	"github.com/stretchr/testify/assert"
 )
 

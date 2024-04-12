@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/mjdusa/go-ext/pkg/punycode"
+	"github.com/mjdusa/go-ex/pkg/punycode"
 	"github.com/stretchr/testify/assert"
 )
 

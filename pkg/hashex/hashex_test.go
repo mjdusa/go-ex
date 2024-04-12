@@ -3,7 +3,7 @@ package hashex_test
 import (
 	"testing"
 
-	"github.com/mjdusa/go-ext/pkg/hashex"
+	"github.com/mjdusa/go-ex/pkg/hashex"
 	"github.com/stretchr/testify/assert"
 )
 

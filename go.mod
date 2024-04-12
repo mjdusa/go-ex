@@ -1,4 +1,4 @@
-module github.com/mjdusa/go-ext
+module github.com/mjdusa/go-ex
 
 go 1.22
 
